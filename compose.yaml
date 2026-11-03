@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nexoratech
+      POSTGRES_USER: nexoratech
+      POSTGRES_PASSWORD: change_this_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - nexoratech_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nexoratech -d nexoratech"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+volumes:
+  nexoratech_db:
